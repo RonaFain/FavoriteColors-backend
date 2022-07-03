@@ -1,11 +1,9 @@
 const fs = require('fs')
-const gColors = require('../data/color.json')
-const utilService = require('./util.service.js')
+const gColors = require('../../data/color.json')
+const utilService = require('../../services/util.service.js')
 
 module.exports = {
     query,
-    // getById,
-    // remove,
     save
 }
 
@@ -25,17 +23,6 @@ async function save(color) {
     await _saveColorsToFile()
     return color
 }
-
-// function remove(colorId) {
-//     const idx = gColors.findIndex(color => color._id === colorId)
-//     gColors.splice(idx, 1)
-//     return _saveColorsToFile()
-// }
-
-// function getById(colorId) {
-//     const color = gColors.find(color => color._id === colorId)
-//     return Promise.resolve(color)
-// }
 
 function _saveColorsToFile() {
     return new Promise((resolve, reject) => {

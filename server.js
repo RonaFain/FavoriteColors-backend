@@ -2,7 +2,6 @@ const express = require('express')
 const cors = require('cors')
 const path = require('path')
 
-const colorService = require('./services/color.service')
 const { setupSocketAPI } = require('./services/socket.service')
 
 const app = express()
@@ -20,27 +19,8 @@ if (process.env.NODE_ENV === 'production') {
     app.use(cors(corsOptions))
 }
 
-
-app.get('/api/color', async (req, res) => {
-    try {
-        const colors = await colorService.query()
-        res.send(colors)
-    } catch (err) {
-        throw err
-    }
-})
-
-app.put('/api/color', async (req, res) => {
-    try {
-        const color = req.body
-        color.voteCount++
-        const savedColor = await colorService.save(color)
-        res.send(savedColor)
-    } catch (err) {
-        throw err
-    }
-})
-
+const colorRoutes = require('./api/color/color.routes.js')
+app.use('/api/color', colorRoutes)
 setupSocketAPI(http)
 
 app.get('/**', (req, res) => {
